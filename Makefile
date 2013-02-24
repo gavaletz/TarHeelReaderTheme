@@ -1,4 +1,4 @@
-all: build copygba
+all: build copyameem
 
 locale/de/LC_MESSAGES/thr.mo: languages/de.po
 	mkdir -p locale/de/LC_MESSAGES
@@ -32,7 +32,7 @@ translate:
 	python tools/BuildTemplate.py --lang=en --extract=languages/thr.pot --output=Templates.json templates/*.html searchForm.json readingForm.json categories.json languages.json ratings.json locales.json
 
 copyameem:
-	rsync -az --delete . gbserver3:/var/www/tarheelreader/wp-content/themes/thr3
+	rsync -az --delete . shaik@gbserver3.cs.unc.edu:/var/www/tarheelreader/wp-content/themes/thr3
 	#launch.py http://gbserver3.cs.unc.edu/
 
 copygba:
