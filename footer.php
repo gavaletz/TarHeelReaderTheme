@@ -10,7 +10,9 @@
         <script data-main="/theme/js/main" src="/theme/js/require.js"></script>
         <![endif]>
     <?php else : ?>
-        <script>logEvent('classicmode', 'on', 'now');</script>
+        <script>
+            logEvent('classicmode', 'on', 'now');
+        </script>
     <?php endif ?>
 </body>
 </html>

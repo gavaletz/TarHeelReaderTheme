@@ -5,14 +5,12 @@ define(["route",
         "templates",
         "keyboard",
         "state",
-        "speech"
-        ], function(route, page, templates, keys, state, speech) {
+        "speech",
+        "ios"
+        ], function(route, page, templates, keys, state, speech, ios) {
 
-    var book = null; // current book
-
-    $("body").on("PageRendered", function() {
-       // page.setHoverColors($(this));
-    }); // end PageVisible
+    var book = null, // current book
+        picBoxSize = {}; // sizing the pic box same as last time
 
     function fetchBook(slug) {
         var $def = $.Deferred();
@@ -110,6 +108,9 @@ define(["route",
                 .append(bookHeading(pageNumber, book.ID))
                 .append('<div class="content-wrap">' + newContent + '</div>');
 
+            // size the pic box like last time, its probably the same
+            $oldPage.find('.thr-pic-box').css(picBoxSize);
+
             $def.resolve($oldPage, {title: 'Tar Heel Reader | ' + book.title,
                 colors: true});
         });
@@ -148,10 +149,11 @@ define(["route",
         } else {
             available = Math.min(ww, wh - bt - 8);
         }
-        $box.css({
+        picBoxSize = {
             width: available + 'px',
             height: available + 'px'
-        });
+        };
+        $box.css(picBoxSize);
     }
 
     // only resize when we're done instead of every 20ms
@@ -294,6 +296,10 @@ define(["route",
 
     // handle toggling favorites
     $(document).on('click', '.front-page .thr-favorites-icon', function(ev) {
+        if (ios.cancelNav(ev)) {
+            // prevent ios double click bug
+            return false;
+        }
         ev.preventDefault();
         var $page = $('.front-page.active-page'),
             id = $page.find('.content-wrap h1').attr('data-id');
@@ -317,6 +323,8 @@ define(["route",
         if (toSay) {
             speech.play('site', state.get('voice'), toSay);
         }
+
+        ios.focusVoiceOverOnText($page);
     }
 
     route.add('render', /^\/\d+\/\d+\/\d+\/([^\/]+)\/(?:(\d+)\/)?(?:\?.*)?$/, renderBook);

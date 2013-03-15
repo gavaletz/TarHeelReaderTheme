@@ -1,4 +1,25 @@
 <?php
+// check for a restart from an iOS device
+if (!is_ajax() && array_key_exists('thr', $_COOKIE)) {
+    $json = $_COOKIE['thr'];
+    $json = stripslashes($json); // magic quotes?
+    $value = json_decode($json, true);
+    if (array_key_exists('lastURL', $value)) {
+    	thr_setcookie(1);
+        $home = home_url();
+        $url = $value['lastURL'];
+        BuG("home=$home");
+        BuG("url=$url");
+        if (strpos($url, $home) === 0) {
+            $url = substr($url, strlen($home));
+            BuG("relative=$url");
+            if ($url != '/') {
+                header('Location: ' . $url);
+                die();
+            }
+        }
+    }
+}
 thr_header('home-page'); ?> <!-- front-page.php -->
 
 <?php

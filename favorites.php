@@ -132,6 +132,5 @@ if ($result['more']) {
     $view['nextLink'] = favorites_url($page+1);
 }
 echo template_render('find', $view);
-
 thr_footer();
 ?>

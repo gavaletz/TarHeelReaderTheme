@@ -7,7 +7,7 @@ define(['route',
         'json2'
         ],
     function(route, templates, controller, fileuploader) {
-        var maxCaptionLength = 120;  // no page text may be longer than this
+        var maxCaptionLength = 130;  // no page text may be longer than this
 
         var galleryData = {}; // parameters for the photo search
         var $editDialog = null; // holds the page editor dialog which we'll create only once
@@ -599,7 +599,7 @@ define(['route',
 
         // initialize the writing page.
         function writeInit(url, id, copyId) {
-            console.log('write', id, copyId);
+            //console.log('write', id, copyId);
             var $page = this;
 
             var bookContent = {};

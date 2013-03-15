@@ -3,8 +3,9 @@ define([  "route",
           "page",
           "state",
           "templates",
+          "ios",
           "history.adapter.jquery"
-         ], function(route, page, state, templates) {
+         ], function(route, page, state, templates, ios) {
 
     var History = window.History,
         document = window.document,
@@ -12,6 +13,7 @@ define([  "route",
 
     if (!History.enabled) {
         console.log('History not enabled');
+        state.set('classic', '1');  // switch them to classic mode so they have some hope of working
         return false;
     }
 
@@ -90,6 +92,9 @@ define([  "route",
             url = hist.url,
             bar = window.location.href,
             context = hist.data;
+
+        ios.setLastUrl(url);
+
         //console.log("State changed...", url, context);
         if (url != bar && bar.indexOf('#') > -1) {
             //console.log('bar = ', bar);

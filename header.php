@@ -9,7 +9,7 @@
 <!--[if IE 7 ]>    <html class="ie ie7 ie6-7 no-js unsupported" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 8 ]>    <html class="ie ie8 no-js<?php echo $classic;?>" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 9 ]>    <html class="ie ie9 no-js<?php echo $classic;?>" <?php language_attributes(); ?>> <![endif]-->
-<!--[if gt IE 9]><!--><html class="no-js<?php echo $classic;?>" <?php language_attributes(); ?>><!--<![endif]-->
+<!--[if gt IE 9]><!--><html manifest = "/manifest" class="no-js<?php echo $classic;?>" <?php language_attributes(); ?>><!--<![endif]-->
 <!-- the "no-js" class is for Modernizr. -->
 
 <head>
@@ -55,7 +55,7 @@
 
         // create GA event onerror
         window.onerror = function(message, url, line) {
-            if (typeof(_gaq) === "object") {
+            if (typeof(_gaq) === "object" && url.indexOf('cs.unc.edu') != -1) {
                 _gaq.push(["_trackEvent","onerror",message,(url+" ("+line+")"),0,true]);
             }
             return true;
