@@ -92,17 +92,20 @@ define([ "route", "json!../state.json", "jquery.cookie", "json2" ], function(rou
 
     function favoritesURL() {
         var p = {
-            voice: state.voice,
             pageColor: state.pageColor,
             textColor: state.textColor,
-            fpage: 1
+            voice: state.voice,
         };
         if (state.collection) {
             p.collection = state.collection;
         } else {
             p.favorites = state.favorites;
         }
-        return '/favorites/?' + $.param(p);
+        p.fpage = 1;
+        var url = '/favorites/?' + $.param(p);
+        url = url.replace(",","%2C");
+        alert(url);
+        return url;
     }
 
     stateUpdate(window.location.href);

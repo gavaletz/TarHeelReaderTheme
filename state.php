@@ -184,7 +184,6 @@ function favorites_url($page = null) {
         $page = 1; // $THRState['fpage'];
     }
     $p[] = "fpage=$page";
-
     if (count($p) > 0) {
         return '/favorites/?' . implode('&', $p);
     } else {
