@@ -22,6 +22,7 @@ The Cache Manifest file itself should be specified in the <html> element of the
     </html>
 
 Note that the .appcache file should be served with the proper MIME type:
+
     text/cache-manifest
 
 This concludes the basic setup for AppCache. Now, let's discuss how it is
@@ -51,6 +52,7 @@ manifest.php
 This is the script that will generate the Cache Manifest. Let us now review its important components:
 
 First, the script must send a header with the correct MIME type:
+
     header('Content-Type: text/cache-manifest');
 
 Followed by this, we next specify static resources, such as the favorites icon, the general CSS file
@@ -89,5 +91,36 @@ for the application.
 
 state.php
 -------------------------------
+In this file, we will create an offline state for the application. First, in the existing $THRDefault array, we have
+added the an offline variable, and initially set its value to 0 (false).
 
+    'offline' => 0
+
+In the array THRPatterns, we use a regular expression to specify the legal values for the offline state. We only allow
+0 and 1 (false and true).
+    'offline' => '/[01]/'
+
+Now, we have set up an offline state for the application. Now let us setup a way for the user to trigger a state change.
+First, we need to create an offline button in settings.html.
+
+
+settings.html
+-------------------------------
+    <li><span class = "offline">_(Offline)</span></li>
+
+After this, we can handle a click to this button in navigation.js
+
+navigation.js
+-------------------------------
+In the following function, we specify that when the offline button is clicked, the application should redirect
+to the favorites page, and also add a "offline=1" parameter to the url. I will explain the latter change below.
+
+    $body.on("click", ".active-page .mainSettings:visible .offline", function() {
+    	var url = state.favoritesURL();
+    	var offlineURL = url+"&offline=1";
+        var id = $(this).attr('data-id');
+        window.location.href = offlineURL;
+    });
+
+Now that we have
 
