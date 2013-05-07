@@ -44,5 +44,31 @@ To implement this, we have employed the following design:
 2. This Cache Manifest file is then set to the HTML element of the page's header (specified in header.php).
 3. Following this, AppCache will cache all of the resources specified in the Cache Manifest file, and the user can safely go offline.
 
+Given this design, let us now review the details of the implementation:
 
+manifest.php
+-------------------------------
+This is the script that will generate the Cache Manifest. Let us now review its important components:
 
+First, the script must send a header with the correct MIME type:
+    header('Content-Type: text/cache-manifest');
+
+Followed by this, we next specify static resources, such as the favorites icon, the general CSS file
+for TarHeel Reader, etc. Once we have done this, we are now ready to dynamically cache the pages and images
+of the favorited books.  This is accomplished using the following loop:
+
+    for($i=0; $i<$size; $i++)
+    {
+        $post = get_post($favorites[$i]);
+    	$book = ParseBookPost($post);
+    	echo "/book-as-json/?slug=".$book['slug']."\n";
+    	$bookPages = $book['pages'];
+    	$numPages = count($bookPages);
+    	for($j = 0; $j <$numPages+1; $j++){
+    		$pageArray = $bookPages[$j];
+    		echo pageLink($book['link'], $j+1)."\n";
+    		echo $pageArray['url']."\n";
+    	}
+    }
+
+In the above loop, for each page in the book, we are echoing the page itself, and the image associated with it.
