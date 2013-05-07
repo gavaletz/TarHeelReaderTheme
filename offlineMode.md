@@ -64,11 +64,29 @@ of the favorited books.  This is accomplished using the following loop:
     	echo "/book-as-json/?slug=".$book['slug']."\n";
     	$bookPages = $book['pages'];
     	$numPages = count($bookPages);
-    	for($j = 0; $j <$numPages+1; $j++){
+    	for($j = 0; $j <$numPages+1; $j++)
+        {
     		$pageArray = $bookPages[$j];
     		echo pageLink($book['link'], $j+1)."\n";
     		echo $pageArray['url']."\n";
     	}
     }
 
-In the above loop, for each page in the book, we are echoing the page itself, and the image associated with it.
+Above, we are looping through each favorited book and echoing/printing important resources. For each page in a book, 
+we are echoing the page itself, and the image associated with it.
+
+After this, we have now completed caching the important resources. Next, let us set the fallback page for offline 
+mode:
+    echo "FALLBACK:\n";
+    echo "/ ".$fav_url."\n";
+
+As you can see, we have set the fallback for all pages (the "/" serves as a wildcard) to the favorites pages ($fav_url). 
+
+Now, we have completed setting up manifest.php. Next we need to specify manifest.php in the <html> element of our pages.
+However, we only wish to do this when the user enters offline mode. To accomplish this, let us create an offline state 
+for the application. 
+
+state.php
+-------------------------------
+
+
