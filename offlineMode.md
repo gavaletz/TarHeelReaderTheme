@@ -43,3 +43,5 @@ To implement this, we have employed the following design:
 2. This Cache Manifest file is then set to the HTML element of the page's header (specified in header.php).
 3. Following this, AppCache will cache all of the resources specified in the Cache Manifest file, and the user can safely go offline.
 
+
+
