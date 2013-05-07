@@ -14,7 +14,7 @@ under the CACHE section. In addition to this, we will also specify fallback
 pages for when we are in offline mode, specified under the FALLBACK section. For
 this project, these are the main sections required in our Cache Manifest file.
 
-The Cache Manifest file itself should be specified in the <html> element of the
+The Cache Manifest file itself should be specified in the html element of the
 .html file you are caching from, as shown below:
 
     <html manifest = "test.appcache">
@@ -85,7 +85,7 @@ mode:
 
 As you can see, we have set the fallback for all pages (the "/" serves as a wildcard) to the favorites pages ($fav_url). 
 
-Now, we have completed setting up manifest.php. Next we need to specify manifest.php in the <html> element of our pages.
+Now, we have completed setting up manifest.php. Next we need to specify manifest.php in the html element of our pages.
 However, we only wish to do this when the user enters offline mode. To accomplish this, let us create an offline state 
 for the application. 
 
@@ -156,10 +156,18 @@ the path of the manifest file (\manifest).
         $manifest = "\manifest";
     }
 
-Lastly, we simply specify this variable in the <html> element. 
+Lastly, we simply specify this variable in the html element. 
 
     <html manifest = "<?php echo $manifest ?....>"
 
+Now we have our basic offline mode set up. However, (at least) the following important changes still need to be completed before
+this is ready for production:
 
+Future:
+-------------------------------
+1. Make it work outside classic mode
+2. Handle re-entering online mode better
+3. Implement for Firefox
+4. More testing
 
     
