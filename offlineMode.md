@@ -39,6 +39,7 @@ manner:
 4. Now the user can go offline, and continue to read the books.
 
 To implement this, we have employed the following design:
+
 1. the "offline" button, a Cache Manifest file is dynamically generated, in which all of the favorited books' pages, and images are cached.
 2. This Cache Manifest file is then set to the HTML element of the page's header (specified in header.php).
 3. Following this, AppCache will cache all of the resources specified in the Cache Manifest file, and the user can safely go offline.
