@@ -77,6 +77,7 @@ we are echoing the page itself, and the image associated with it.
 
 After this, we have now completed caching the important resources. Next, let us set the fallback page for offline 
 mode:
+
     echo "FALLBACK:\n";
     echo "/ ".$fav_url."\n";
 
