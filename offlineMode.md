@@ -98,6 +98,7 @@ added the an offline variable, and initially set its value to 0 (false).
 
 In the array THRPatterns, we use a regular expression to specify the legal values for the offline state. We only allow
 0 and 1 (false and true).
+
     'offline' => '/[01]/'
 
 Now, we have set up an offline state for the application. Now let us setup a way for the user to trigger a state change.
@@ -122,5 +123,43 @@ to the favorites page, and also add a "offline=1" parameter to the url. I will e
         window.location.href = offlineURL;
     });
 
-Now that we have
+Now that we have the offline button working, let us trigger the state change. Notice that above, we redirect
+the application to the favorites page. Hence, we will trigger offline mode in favorites.php
 
+favorites.php
+-------------------------------
+First, we check to see if the "offline" parameter exists in the current favorites URL. Recall that we set this in
+navigation.js, when we redirected. This is shown below. Notice also that we are entering classic mode. This is a 
+result of existing bugs for offline mode when in regular mode. As this project develops, we will remove the classic
+mode state change found here. 
+
+    if(array_key_exists('offline', $_GET) && $_GET['offline'] == 1){
+        setTHR('offline', 1);
+    	setTHR('classic', 1); 
+    }
+    else{
+    	setTHR('offline', 0);
+    	setTHR('classic', 0); 
+    }
+
+Now, we have triggered a state change when the user clicks the offline button. Now, we need to tie everything together,
+and specify the Cache Manifest file in the html element when the user enters offline mode. This is done in header.php.
+
+header.php
+-------------------------------
+First, we create a $manifest variable. If the state of 'offline' is currently set to 1, then we set this variable to
+the path of the manifest file (\manifest).
+
+    $manifest = "";
+    if(THR('offline'))
+    {
+        $manifest = "\manifest";
+    }
+
+Lastly, we simply specify this variable in the <html> element. 
+
+    <html manifest = "<?php echo $manifest ?....>"
+
+
+
+    
