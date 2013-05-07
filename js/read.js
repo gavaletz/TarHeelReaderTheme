@@ -110,7 +110,6 @@ define(["route",
 
             // size the pic box like last time, its probably the same
             $oldPage.find('.thr-pic-box').css(picBoxSize);
-
             $def.resolve($oldPage, {title: 'Tar Heel Reader | ' + book.title,
                 colors: true});
         });

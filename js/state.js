@@ -111,8 +111,6 @@ define([ "route", "json!../state.json", "jquery.cookie", "json2" ], function(rou
         }
         p.fpage = 1;
         var url = '/favorites/?' + $.param(p);
-        url = url.replace(",","%2C");
-        alert(url);
         return url;
     }
 

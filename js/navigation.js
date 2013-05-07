@@ -1,7 +1,7 @@
 // Code for navigation and settings menus
 require(["state", "controller", "templates", "ios"], function(state, controller, templates, ios) {
     // list of settings
-    var settings = ["voice", "pageColor", "textColor"], // the settings that we are concerned with (voice = speech)
+    var settings = ["voice", "pageColor", "textColor","offline"], // the settings that we are concerned with (voice = speech)
         options = { // list of available options
             speech: {
                 silent: 'silent',
@@ -40,7 +40,8 @@ require(["state", "controller", "templates", "ios"], function(state, controller,
         defaultOptions = {
             voice: options.speech.silent,
             pageColor: options.colors.white,
-            textColor: options.colors.black
+            textColor: options.colors.black,
+            offline: 0,
         };
 
     function showNav() {
@@ -189,6 +190,13 @@ require(["state", "controller", "templates", "ios"], function(state, controller,
             var id = $(this).attr('data-id');
             controller.gotoUrl('/reading-controls/?id=' + id);
         });
+        $body.on("click", ".active-page .mainSettings:visible .offline", function() {
+        	state.set('offline', 1);
+        	var url = state.favoritesURL();
+        	var offlineURL = url+"&offline=1";
+            var id = $(this).attr('data-id');
+            window.location.href = offlineURL;
+        });
 
         // touchstart for touch-screen display
         $(document).on("click", "html, body", function(e) { // if the user clicks anywhere other than one of the menus, hide the menus
@@ -234,7 +242,8 @@ require(["state", "controller", "templates", "ios"], function(state, controller,
         return {
             speech: state.get(settings[0]),
             pageColor: state.get(settings[1]),
-            textColor: state.get(settings[2])
+            textColor: state.get(settings[2]),
+            offline: state.get(settings[3])
         };
     }
 
@@ -255,8 +264,9 @@ require(["state", "controller", "templates", "ios"], function(state, controller,
         // create settings menu if it doesn't already exist
         if (needsMenu.length !== 0) {
             var id = needsMenu.attr('data-id'),
-                voice = currentSettings.speech;
-            needsMenu.append(templates.render('settings', {ID: id, voice: voice}));
+            voice = currentSettings.speech;
+            var off = state.get(settings[3]);
+            needsMenu.append(templates.render('settings', {ID: id, voice: voice, offline: off}));
         }
         $(".checked").removeClass("checked");
         // update the currently set options with a check mark next to them

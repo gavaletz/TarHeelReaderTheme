@@ -4,18 +4,22 @@
     if (THR('classic')) {
         $classic = " classic";
     }
+	$manifest = "";
+	if(THR('offline')){
+		$manifest = "\manifest";
+	}
 ?>
 <!--[if lt IE 7 ]> <html class="ie ie6 ie6-7 no-js unsupported" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 7 ]>    <html class="ie ie7 ie6-7 no-js unsupported" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 8 ]>    <html class="ie ie8 no-js<?php echo $classic;?>" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 9 ]>    <html class="ie ie9 no-js<?php echo $classic;?>" <?php language_attributes(); ?>> <![endif]-->
-<!--[if gt IE 9]><!--><html manifest = "/manifest" class="no-js<?php echo $classic;?>" <?php language_attributes(); ?>><!--<![endif]-->
+<!--[if gt IE 9]><!--><html manifest = "<?php echo $manifest ?>" class="no-js<?php echo $classic;?>" <?php language_attributes(); ?>><!--<![endif]-->
 <!-- the "no-js" class is for Modernizr. -->
 
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=4">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=4"/>
     <title><?php thr_title(); ?></title>
     <link rel="shortcut icon" href="/theme/images/favicon.ico">
     <link rel="apple-touch-icon" href="/theme/images/apple-touch-icon.png">

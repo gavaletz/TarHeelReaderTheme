@@ -6,6 +6,14 @@ GET: Return a list of books that match the query
 */
 ?>
 <?php
+if(array_key_exists('offline', $_GET) && $_GET['offline'] == 1){
+	setTHR('offline', 1);
+	setTHR('classic', 1); 
+}
+else{
+	setTHR('offline', 0);
+	//setTHR('classic', 0); 
+}
 // handle converting old format favorites URL's to new format
 function new_favorites_url($q) {
     global $THRPatterns;
